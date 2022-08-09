@@ -1,0 +1,13 @@
+docker pull ipfs/go-ipfs
+
+export ipfs_staging=/send/
+export ipfs_data=/store/
+docker run -d --name ipfs_main -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs ipfs/go-ipfs
+docker exec ipfs_main ipfs swarm peers
+cp -r nft_data $ipfs_staging
+docker exec ipfs_main ipfs add -r /export/nft_data
+docker exec ipfs_main ipfs pin ls --type=all              (to pin the data installed so that it will not be removed)
+
+
+
+docker exec -it <container id> //bin//sh                  (exit to exit inside docker container)
